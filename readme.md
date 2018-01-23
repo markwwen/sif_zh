@@ -10,6 +10,15 @@ $ pip install -r requirements.txt
 ```
 
 ## Get started
-To get started, just cd into the directory src/ and run sif_embedding.py.
+To get started, you need:
+- A corpus to train word2vec model and get frequency of word
+- A corpus of sentences (here is some question about tea in Chinese)
+
+You can use the function `get_dict_word_fre` in `process_data.py` to get a `dict` of word frequency,
+and the function in `sif_embedding.py` will help you to calculate the weighted-embedding of sentences, principle
+component and final sif-embedding, and save in pickle format.
+
+If you need to run the code, please make sure the model is in the right path.
+
 
 
