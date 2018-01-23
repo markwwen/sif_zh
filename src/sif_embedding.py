@@ -5,7 +5,8 @@ import pickle
 import gensim
 from . import params
 from sklearn.decomposition import TruncatedSVD
-from scipy import spatial
+from numpy import dot
+from numpy.linalg import norm
 
 base_data_path = '/data'
 
@@ -84,7 +85,8 @@ def remove_pc(X, npc=1):
 
 # return the cosine similarity of v1 and v2
 def my_cosine_similarity(v1, v2):
-    return 1 - spatial.distance.cosine(v1, v2)
+    cos_sim = dot(v1, v2) / (norm(v1) * norm(v2))
+    return cos_sim[0]
 
 
 def get_sent_embedding(text, the_params):
