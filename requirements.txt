@@ -1,0 +1,6 @@
+pickle
+jieba
+numpy
+gensim
+sklearn
+scipy
