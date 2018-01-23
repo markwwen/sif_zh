@@ -20,7 +20,6 @@ tea_dict_word_weight = pickle.load(open(base_data_path + '/sif_model/dict_word_w
 tea_pc = pickle.load(open(base_data_path + '/sif_model/pc.p', 'rb'))
 # get the sif_embedding of sentences
 tea_sif_embedding = pickle.load(open(base_data_path + '/sif_model/sif_embedding.p', 'rb'))
-
 # get the sentences
 tea_sentences = []
 with open(base_data_path + '/sif_model/tea_question.csv') as f:
