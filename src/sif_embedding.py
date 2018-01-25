@@ -8,12 +8,13 @@ from sklearn.decomposition import TruncatedSVD
 from numpy import dot
 from numpy.linalg import norm
 
+# the path that you store you word2vec model and other sif model
 base_data_path = '/data'
 
 # set the word and sentence dimension
 tea_w2v_size = 200
 # get the word2vec model
-tea_w2v_model = gensim.models.Word2Vec.load(base_data_path + '/w2v_model/tea/with_wiki.model')
+tea_w2v_model = gensim.models.Word2Vec.load(base_data_path + '/w2v_model/tea/tea.model')
 # get the p(w) dict
 tea_dict_word_weight = pickle.load(open(base_data_path + '/sif_model/dict_word_weight.p', 'rb'))
 # get the principle component
@@ -22,6 +23,8 @@ tea_pc = pickle.load(open(base_data_path + '/sif_model/pc.p', 'rb'))
 tea_sif_embedding = pickle.load(open(base_data_path + '/sif_model/sif_embedding.p', 'rb'))
 # get the sentences
 tea_sentences = []
+
+
 with open(base_data_path + '/sif_model/tea_question.csv') as f:
     for line in f.readlines():
         line = line.replace('\n', '')
@@ -35,6 +38,23 @@ o_params.pc = tea_pc
 o_params.sif_embedding = tea_sif_embedding
 o_params.sentences = tea_sentences
 
+def build_pc_and_sif_embedding(the_params):
+    """
+    build the weighted embedding, principle component and sif embedding and save in pickle.
+
+    :param the_params: params class instance, which contain all the parameters
+    :return: null
+    """
+    weighted_embedding = get_weighted_embedding(the_params)
+    pickle.dump(weighted_embedding, open(base_data_path + '/sif_model/weighted_embedding.p', 'wb'))
+
+    pc = compute_pc(weighted_embedding)
+    pickle.dump(pc, open(base_data_path + '/sif_model/pc.p', 'wb'))
+
+    sif_embedding = remove_pc(weighted_embedding)
+    pickle.dump(sif_embedding, open(base_data_path + '/sif_model/sif_embedding.p', 'wb'))
+
+
 
 def get_weighted_embedding(the_params):
     """
@@ -42,7 +62,7 @@ def get_weighted_embedding(the_params):
     :param the_params: params class instance, which contain all the parameters
     :return: the weighted embedding of sentences
     """
-    sent_embedding = []
+    weighted_embedding = []
     for s in the_params.sentences:
         s_embedding = np.array([0.0] * the_params.w2v_size)
         words = list(jieba.cut(s))
@@ -51,8 +71,8 @@ def get_weighted_embedding(the_params):
                 s_embedding += the_params.w2v_model[word] * the_params.dict_word_weight[word]
             else:
                 s_embedding += [1] * the_params.w2v_size
-        sent_embedding.append(s_embedding)
-    return np.array(sent_embedding)
+        weighted_embedding.append(s_embedding)
+    return np.array(weighted_embedding)
 
 
 def compute_pc(X, npc=1):
@@ -124,24 +144,4 @@ def get_most_similar_k(text, k, the_params):
 
 
 if __name__ == '__main__':
-    # print(len(sentences))
-    # print(sentences[:2])
-    # get the weighted embedding
-    # weighted_embedding = get_weighted_embedding(sentences, w2v_model, dict_word_weight, 200)
-    # pickle.dump(weighted_embedding, open('../data/sentences_weighted_embedding.p', 'wb'))
-    # weighted_embedding = pickle.load(open('../data/sentences_weighted_embedding.p', 'rb'))
-
-    # get the pc
-    # pc = compute_pc(weighted_embedding)
-    # pickle.dump(pc, open('../data/pc.p', 'wb'))
-    # pc = pickle.load(open('../data/pc.p', 'rb'))
-    # print(pc)
-
-    # get the sif_embedding of sentences
-    # sif_embedding = remove_pc(weighted_embedding)
-    # pickle.dump(sif_embedding, open('../data/sif_embedding.p', 'wb'))
-
-    test_sent = '是不是等级越高的茶越好'
-    similarity_sentences = get_most_similar_k(test_sent, 5, the_params=o_params)
-    for i in similarity_sentences:
-        print(i)
+    build_pc_and_sif_embedding(o_params)
