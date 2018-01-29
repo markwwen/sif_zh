@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 import pickle
 
-base_data_path = '/data'
 
-
-def get_dict_word_fre():
+def get_dict_word_fre(corpus_path):
     word_all_num = 0
     dict_word_num = {}
     dict_word_fre = {}
-    with open(base_data_path + '/corpus/word2vec_corpus/tea_jieba.corpus') as f:
+    with open(corpus_path) as f:
         for line in f.readlines():
             line = line.replace('\n', '')
             words = line.split(' ')
@@ -18,10 +16,8 @@ def get_dict_word_fre():
                     dict_word_num[word] += 1
                 else:
                     dict_word_num[word] = 1
-
     for word in dict_word_num:
         dict_word_fre[word] = dict_word_num[word] / word_all_num
-
     return word_all_num, dict_word_fre
 
 
@@ -34,15 +30,13 @@ def get_dict_word_weight(dict_word_fre, a=1e-3):
     return dict_word_weight
 
 if __name__ == '__main__':
-    word_all_num, dict_word_fre = get_dict_word_fre()
-    # pickle.dump(dict_word_fre, open(base_data_path + '/sif_model/dict_word_fre.p', 'wb'))
-    # dict_word_fre = pickle.load(open(base_data_path + '/sif_model/dict_word_fre.p', 'rb'))
-    print(word_all_num)
-    print(dict_word_fre['好'])
-    print(dict_word_fre['的'])
-
-    dict_word_weight = get_dict_word_weight(dict_word_fre)
-    pickle.dump(dict_word_weight, open(base_data_path + '/sif_model/dict_word_weight.p', 'wb'))
-    # dict_word_weight = pickle.load(open(base_data_path + '/sif_model/dict_word_weight.p', 'rb'))
-    print(dict_word_weight['好'])
-    print(dict_word_weight['的'])
+    tea_jieba_corpus_path  = '/data/corpus/word2vec_corpus/tea_jieba.corpus'
+    tea_word_all_num, tea_dict_word_fre = get_dict_word_fre(tea_jieba_corpus_path)
+    print(tea_word_all_num)
+    print(tea_dict_word_fre['好'])
+    print(tea_dict_word_fre['的'])
+    tea_dict_word_weight_path = '/data/sif_model/dict_word_weight.p'
+    tea_dict_word_weight = get_dict_word_weight(tea_dict_word_fre)
+    pickle.dump(tea_dict_word_weight, open(tea_dict_word_weight_path, 'wb'))
+    print(tea_dict_word_weight['好'])
+    print(tea_dict_word_weight['的'])
