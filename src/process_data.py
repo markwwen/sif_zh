@@ -8,7 +8,7 @@ def get_dict_word_fre():
     word_all_num = 0
     dict_word_num = {}
     dict_word_fre = {}
-    with open(base_data_path + '/corpus/word2vec_corpus/tea_word2vec.corpus') as f:
+    with open(base_data_path + '/corpus/word2vec_corpus/tea_jieba.corpus') as f:
         for line in f.readlines():
             line = line.replace('\n', '')
             words = line.split(' ')
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     print(dict_word_fre['的'])
 
     dict_word_weight = get_dict_word_weight(dict_word_fre)
-    # pickle.dump(dict_word_weight, open(base_data_path + '/sif_model/dict_word_weight.p', 'wb'))
-    dict_word_weight = pickle.load(open(base_data_path + '/sif_model/dict_word_weight.p', 'rb'))
+    pickle.dump(dict_word_weight, open(base_data_path + '/sif_model/dict_word_weight.p', 'wb'))
+    # dict_word_weight = pickle.load(open(base_data_path + '/sif_model/dict_word_weight.p', 'rb'))
     print(dict_word_weight['好'])
     print(dict_word_weight['的'])

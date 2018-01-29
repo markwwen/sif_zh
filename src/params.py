@@ -8,7 +8,7 @@ class Params(object):
 
         self.dump_pc_path = ''
         self.dump_weighted_embedding_path = ''
-        self.dump_sif_embedding_path = ''
+        self.dump_sif_embedding_list_path = ''
 
         self.load_pc_path = ''
         self.load_sentence_list_path = ''
@@ -22,13 +22,12 @@ class Params(object):
         self.dict_word_weight = None
         self.w2v_model = None
 
-        self.load_model()
-
     def load_model(self):
         if self.load_pc_path:
-            self.pc = pickle.load(self.load_pc_path)
+            self.pc = pickle.load(open(self.load_pc_path, 'rb'))
         else:
             print('There is not pc path')
+
         if self.load_sentence_list_path:
             sentence_list = []
             with open(self.load_sentence_list_path) as f:
@@ -53,11 +52,13 @@ class Params(object):
             print('There is not w2v model path')
 
     def tea_init(self):
+        self.w2v_size = 200
         self.dump_pc_path = '/data/sif_model/pc.p'
         self.dump_weighted_embedding_path = '/data/sif_model/weighted_embedding_path'
-        self.dump_sif_embedding_path = '/data/sif_model/sif_embedding.p'
+        self.dump_sif_embedding_list_path = '/data/sif_model/sif_embedding.p'
         self.load_pc_path = '/data/sif_model/pc.p'
+        self.load_sentence_list_path = '/data/sif_model/tea_question.csv'
         self.load_sif_embedding_path = '/data/sif_model/sif_embedding.p'
         self.load_dict_word_weight_path = '/data/sif_model/dict_word_weight.p'
-        self.load_w2v_model_path = '/data/w2v_model/tea/tea.model'
+        self.load_w2v_model_path = '/data/w2v_model/tea/tea_jieba.model'
         self.load_model()
