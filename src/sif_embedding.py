@@ -21,7 +21,7 @@ def get_weighted_embedding(text, params):
             weighted_embedding += params.w2v_model[word] * params.dict_word_weight[word]
         else:
             # weighted_embedding += np.random.normal(size=params.w2v_size) * 0.001
-            weighted_embedding += [1] * params.w2v_size * 0.001
+            weighted_embedding += np.array([1.0] * params.w2v_size) * 0.001
     return weighted_embedding
 
 
