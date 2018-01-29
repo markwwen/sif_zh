@@ -29,8 +29,9 @@ def get_dict_word_weight(dict_word_fre, a=1e-3):
         dict_word_weight[word] = a / (a + dict_word_fre[word])
     return dict_word_weight
 
+
 if __name__ == '__main__':
-    tea_jieba_corpus_path  = '/data/corpus/word2vec_corpus/tea_jieba.corpus'
+    tea_jieba_corpus_path = '/data/corpus/word2vec_corpus/tea_jieba.corpus'
     tea_word_all_num, tea_dict_word_fre = get_dict_word_fre(tea_jieba_corpus_path)
     print(tea_word_all_num)
     print(tea_dict_word_fre['好'])
