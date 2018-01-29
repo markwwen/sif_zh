@@ -63,3 +63,7 @@ class Params(object):
         self.load_dict_word_weight_path = '/data/sif_model/dict_word_weight.p'
         self.load_w2v_model_path = '/data/w2v_model/tea/tea_jieba.model'
         self.load_model()
+
+
+params_o = Params()
+params_o.tea_init()
