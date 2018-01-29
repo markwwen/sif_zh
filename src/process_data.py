@@ -28,7 +28,6 @@ def get_dict_word_fre():
 def get_dict_word_weight(dict_word_fre, a=1e-3):
     if a <= 0:
         a = 1.0
-
     dict_word_weight = {}
     for word in dict_word_fre:
         dict_word_weight[word] = a / (a + dict_word_fre[word])
@@ -37,7 +36,7 @@ def get_dict_word_weight(dict_word_fre, a=1e-3):
 if __name__ == '__main__':
     word_all_num, dict_word_fre = get_dict_word_fre()
     # pickle.dump(dict_word_fre, open(base_data_path + '/sif_model/dict_word_fre.p', 'wb'))
-    dict_word_fre = pickle.load(open(base_data_path + '/sif_model/dict_word_fre.p', 'rb'))
+    # dict_word_fre = pickle.load(open(base_data_path + '/sif_model/dict_word_fre.p', 'rb'))
     print(word_all_num)
     print(dict_word_fre['好'])
     print(dict_word_fre['的'])
