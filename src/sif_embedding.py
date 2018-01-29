@@ -2,7 +2,6 @@
 import numpy as np
 import jieba
 import pickle
-from .params import Params
 from sklearn.decomposition import TruncatedSVD
 from numpy import dot
 from numpy.linalg import norm
@@ -117,6 +116,3 @@ def get_most_similar_k(text, k, params):
         similarity_sentence_list.append([params.sentence_list[i], distance_list[i]])
     return similarity_sentence_list
 
-
-if __name__ == '__main__':
-    p = Params()

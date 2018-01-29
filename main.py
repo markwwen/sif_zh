@@ -5,9 +5,11 @@ from src.sif_embedding import get_most_similar_k
 
 if __name__ == '__main__':
     p = Params()
+
+    # config the models path and load the models
     p.tea_init()
 
-    # build the model only if in the first time you
+    # build the models only if in the first time you
     build_pc_and_sif_embedding_list(p)
 
     test_sent = '是不是等级越高的茶越好？'
