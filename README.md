@@ -1,4 +1,4 @@
-# SIF_YIMIAN
+# SIF_ZH
 
 This is the implement of a sentence embedding algorithm in [the paper](https://openreview.net/forum?id=SyK00v5xx) "A Simple but Tough-to-Beat Baseline for Sentence Embeddings" in Python3 and in Chinese corpus.
 
